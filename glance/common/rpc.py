@@ -68,7 +68,10 @@ class RPCJSONSerializer(wsgi.JSONResponseSerializer):
 class RPCJSONDeserializer(wsgi.JSONRequestDeserializer):
 
     def _to_datetime(self, obj):
-        return timeutils.parse_strtime(obj)
+        try:
+            return timeutils.parse_strtime(obj)
+        except:
+            return timeutils.normalize_time(timeutils.parse_isotime(obj))
 
     def _sanitizer(self, obj):
         try:
