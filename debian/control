@@ -1,0 +1,231 @@
+Source: glance
+Section: net
+Priority: extra
+Maintainer: Ubuntu OpenStack <openstack-packaging@lists.ubuntu.com>
+Build-Depends: debhelper (>= 9~),
+               dh-python,
+               dh-systemd,
+               openstack-pkg-tools (>= 23~),
+               python-all,
+               python-pbr (>= 1.8),
+               python-setuptools,
+               python-sphinx,
+Build-Depends-Indep: bandit,
+                     python-babel (>= 1.3),
+                     python-castellan (>= 0.4.0),
+                     python-coverage (>= 3.6),
+                     python-crypto (>= 2.6),
+                     python-cryptography (>= 1.0),
+                     python-cursive (>=0.1.1),
+                     python-debtcollector (>= 1.2.0),
+                     python-eventlet (>= 0.18.2),
+                     python-fixtures (>= 3.0.0),
+                     python-futurist (>= 0.11.0),
+                     python-glance-store (>= 0.13.0),
+                     python-hacking,
+                     python-httplib2 (>= 0.7.5),
+                     python-iso8601 (>= 0.1.11),
+                     python-jsonschema (>= 2.0.0),
+                     python-keystoneauth1 (>= 2.7.0),
+                     python-keystoneclient (>= 1:1.7.0),
+                     python-keystonemiddleware (>= 4.0.0),
+                     python-migrate (>= 0.9.6),
+                     python-mock (>= 1.2),
+                     python-monotonic,
+                     python-mox3 (>= 0.7.0),
+                     python-openssl (>= 0.14),
+                     python-os-testr (>= 0.4.1),
+                     python-oslo.concurrency (>= 3.5.0),
+                     python-oslo.config (>= 1:3.12.0),
+                     python-oslo.context (>= 2.4.0),
+                     python-oslo.db (>= 4.1.0),
+                     python-oslo.i18n (>= 2.1.0),
+                     python-oslo.log (>= 3.16.0),
+                     python-oslo.messaging (>= 5.2.0),
+                     python-oslo.middleware (>= 3.0.0),
+                     python-oslo.policy (>= 1.9.0),
+                     python-oslo.serialization (>= 1.10.0),
+                     python-oslo.service (>= 1.10.0),
+                     python-oslo.utils (>= 3.15.0),
+                     python-oslosphinx (>= 2.5.0),
+                     python-oslotest (>= 1.10.0),
+                     python-osprofiler (>= 1.3.0),
+                     python-paste,
+                     python-pastedeploy (>= 1.5.0),
+                     python-pep8,
+                     python-prettytable (>= 0.7),
+                     python-psutil (>= 1.1.1),
+                     python-psycopg2 (>= 2.5),
+                     python-pymysql,
+                     python-requests (>= 2.10.0),
+                     python-retrying (>= 1.2.3),
+                     python-routes (>= 1.12.3),
+                     python-semantic-version (>= 2.3.1),
+                     python-six (>= 1.9.0),
+                     python-sqlalchemy (>= 1.0.10),
+                     python-stevedore (>= 1.10.0),
+                     python-swiftclient (>= 2.2.0),
+                     python-taskflow (>= 1.26.0),
+                     python-testresources (>= 0.2.4),
+                     python-testscenarios (>= 0.4),
+                     python-testtools (>= 1.4.0),
+                     python-webob (>= 1.2.3),
+                     python-wsme (>= 0.8),
+                     python-xattr (>= 0.4),
+                     subunit,
+                     testrepository (>= 0.0.18),
+Standards-Version: 3.9.8
+XS-Python-Version: >= 2.6
+Homepage: http://launchpad.net/glance
+Vcs-Browser: https://git.launchpad.net/~ubuntu-server-dev/ubuntu/+source/glance
+Vcs-Git: git://git.launchpad.net/~ubuntu-server-dev/ubuntu/+source/glance
+XS-Testsuite: autopkgtest
+
+Package: python-glance
+Architecture: all
+Section: python
+Depends: python-castellan (>= 0.4.0),
+         python-crypto (>= 2.6),
+         python-cryptography (>= 1.0),
+         python-cursive (>= 0.1.1),
+         python-debtcollector (>= 1.2.0),
+         python-eventlet (>= 0.18.2),
+         python-futurist (>= 0.11.0),
+         python-glance-store (>= 0.13.0),
+         python-httplib2 (>= 0.7.5),
+         python-iso8601 (>= 0.1.11),
+         python-jsonschema (>= 2.0.0),
+         python-keystoneauth1 (>= 2.7.0),
+         python-keystoneclient (>= 1:1.7.0),
+         python-keystonemiddleware (>= 4.0.0),
+         python-migrate (>= 0.9.6),
+         python-monotonic,
+         python-openssl (>= 0.14),
+         python-oslo.concurrency (>= 3.5.0),
+         python-oslo.config (>= 1:3.12.0),
+         python-oslo.context (>= 2.4.0),
+         python-oslo.db (>= 4.1.0),
+         python-oslo.i18n (>= 2.1.0),
+         python-oslo.log (>= 3.16.0),
+         python-oslo.messaging (>= 5.2.0),
+         python-oslo.middleware (>= 3.0.0),
+         python-oslo.policy (>= 1.9.0),
+         python-oslo.serialization (>= 1.10.0),
+         python-oslo.service (>= 1.10.0),
+         python-oslo.utils (>= 3.15.0),
+         python-osprofiler (>= 1.3.0),
+         python-paste,
+         python-pastedeploy (>= 1.5.0),
+         python-prettytable (>= 0.7),
+         python-retrying (>= 1.2.3),
+         python-routes (>= 1.12.3),
+         python-semantic-version (>= 2.3.1),
+         python-six (>= 1.9.0),
+         python-sqlalchemy (>= 1.0.10),
+         python-stevedore (>= 1.10.0),
+         python-taskflow (>= 1.26.0),
+         python-webob (>= 1.2.3),
+         python-wsme (>= 0.8),
+         ${misc:Depends},
+         ${python:Depends},
+Provides: ${python:Provides},
+XB-Python-Version: ${python:Versions}
+Description: OpenStack Image Registry and Delivery Service - Python library
+ The Glance project provides an image registration and discovery service
+ and an image delivery service. These services are used
+ in conjunction by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package contains the Python libraries.
+
+Package: glance
+Architecture: all
+Section: python
+Depends: glance-api (= ${source:Version}),
+         glance-registry (= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Suggests: python-ceph,
+Description: OpenStack Image Registry and Delivery Service - Daemons
+ The Glance project provides an image registration and discovery service
+ and an image delivery service. These services are used
+ in conjunction by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package is a metapackage for all glance daemons.
+
+Package: python-glance-doc
+Architecture: all
+Section: doc
+Depends: libjs-jquery,
+         ${misc:Depends},
+Description: OpenStack Image Registry and Delivery Service - Documentation
+ The Glance project provides an image registration and discovery service
+ (Parallax) and an image delivery service (Teller). These services are used
+ in conjunction by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package contains the documentation.
+
+Package: glance-common
+Architecture: all
+Section: python
+Depends: adduser,
+         python-glance (= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Breaks: glance ( <= 2011.3-0ubuntu4.1 ),
+Replaces: glance ( <= 2011.3-0ubuntu4.1  ),
+Description: OpenStack Image Registry and Delivery Service - Common
+ The Glance project provides an image registration, discovery and
+ delivery service. These services may be used as stand-along services, and
+ they may also be used by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package contains the glance common.
+
+Package: glance-api
+Architecture: all
+Section: python
+Replaces: glance (<< 2012.1~e1~20110919.1021-0ubuntu2),
+Depends: glance-common (= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Recommends: python-glanceclient,
+Description: OpenStack Image Registry and Delivery Service - API
+ The Glance project provides an image registration, discovery and
+ delivery service. These services may be used as stand-along services, and
+ they may also be used by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package contains the glance API server.
+
+Package: glance-registry
+Architecture: all
+Section: python
+Replaces: glance (<< 2012.1~e1~20110919.1021-0ubuntu2),
+Depends: glance-common (= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Recommends: python-glanceclient,
+Description: OpenStack Image Registry and Delivery Service - Registry
+ The Glance project provides an image registration, discovery and
+ delivery service. These services may be used as stand-along services, and
+ they may also be used by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package contains the glance registry server.
+
+Package: glance-glare
+Architecture: all
+Section: python
+Depends: glance-common (= ${source:Version}),
+         ${misc:Depends},
+         ${python:Depends},
+Description: OpenStack Image Registry and Delivery Service - Artifacts API
+ The Glance project provides an image registration, discovery and
+ delivery service. These services may be used as stand-along services, and
+ they may also be used by Nova to deliver images from object stores, such as
+ OpenStack's Swift service, to Nova's compute nodes.
+ .
+ This package contains the glance artifacts repository API server.

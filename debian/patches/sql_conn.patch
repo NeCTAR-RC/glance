@@ -1,0 +1,38 @@
+--- a/etc/glance-registry.conf
++++ b/etc/glance-registry.conf
+@@ -1021,6 +1021,7 @@
+ # Reason: Should use config option connection or slave_connection to connect the
+ # database.
+ #sqlite_db = oslo.sqlite
++sqlite_db = /var/lib/glance/glance.sqlite
+ 
+ # If True, SQLite uses synchronous mode. (boolean value)
+ # Deprecated group/name - [DEFAULT]/sqlite_synchronous
+@@ -1028,7 +1029,7 @@
+ 
+ # The back end to use for the database. (string value)
+ # Deprecated group/name - [DEFAULT]/db_backend
+-#backend = sqlalchemy
++backend = sqlalchemy
+ 
+ # The SQLAlchemy connection string to use to connect to the database. (string
+ # value)
+--- a/etc/glance-api.conf
++++ b/etc/glance-api.conf
+@@ -1731,6 +1731,7 @@
+ # Reason: Should use config option connection or slave_connection to connect the
+ # database.
+ #sqlite_db = oslo.sqlite
++sqlite_db = /var/lib/glance/glance.sqlite
+ 
+ # If True, SQLite uses synchronous mode. (boolean value)
+ # Deprecated group/name - [DEFAULT]/sqlite_synchronous
+@@ -1738,7 +1739,7 @@
+ 
+ # The back end to use for the database. (string value)
+ # Deprecated group/name - [DEFAULT]/db_backend
+-#backend = sqlalchemy
++backend = sqlalchemy
+ 
+ # The SQLAlchemy connection string to use to connect to the database. (string
+ # value)

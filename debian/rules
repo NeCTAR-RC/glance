@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+# Verbose mode
+#export DH_VERBOSE=1
+export OSLO_PACKAGE_VERSION=$(shell dpkg-parsechangelog | sed -n -e 's/^Version: //p')
+
+DEBVERS ?= $(shell dpkg-parsechangelog | sed -n -e 's/^Version: //p')
+VERSION ?= $(shell echo '$(DEBVERS)' | sed -e 's/^[[:digit:]]*://' -e 's/[-].*//' -e 's/~/./g')
+export OSLO_PACKAGE_VERSION=$(VERSION)
+export PBR_VERSION=$(VERSION)
+
+
+include /usr/share/openstack-pkg-tools/pkgos.make
+
+%:
+	dh $@ --with python2,systemd
+
+get-orig-source:
+	uscan --verbose --force-download --rename --destdir=../build-area
+
+override_dh_install:
+	dh_install --fail-missing
+
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	ostestr --regex "^glance.tests.unit.*"
+endif
+
+override_dh_auto_build:
+	dh_auto_build
+	mkdir -p doc/build/man doc/build/html
+	sphinx-build -b man doc/source doc/build/man
+	sphinx-build -b html doc/source doc/build/html
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf doc/build glance.sqlite .testrepository
+	rm -f debian/*.init debian/*.service debian/*.upstart

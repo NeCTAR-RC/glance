@@ -1,0 +1,74 @@
+Description: Add support for root-tar disk-format, this allows LXD images
+to be used for glance. Discussion on how to support this is going on
+in bug #1535900
+Author: Chuck Short <zulcss@ubuntu.com>
+Forwarded: Not-Needed.
+--- a/doc/source/formats.rst
++++ b/doc/source/formats.rst
+@@ -76,6 +76,10 @@ You can set your image's disk format to
+ 
+   This indicates what is stored in Glance is an Amazon machine image
+ 
++* **root-tar**
++
++  This indicates what is store in Glance is an LXD image.
++
+ Container Format
+ ----------------
+ 
+--- a/doc/source/glanceapi.rst
++++ b/doc/source/glanceapi.rst
+@@ -511,7 +511,7 @@ The list of metadata headers that Glance
+ 
+   This header is required, unless reserving an image. Valid values are one of
+   ``aki``, ``ari``, ``ami``, ``raw``, ``iso``, ``vhd``, ``vhdx``, ``vdi``,
+-  ``qcow2``, or ``vmdk``.
++  ``qcow2``, ``root-tar``, or ``vmdk``.
+ 
+   For more information, see :doc:`About Disk and Container Formats <formats>`.
+ 
+--- a/etc/glance-api.conf
++++ b/etc/glance-api.conf
+@@ -3173,7 +3173,7 @@ backend = sqlalchemy
+ 
+ # Supported values for the 'disk_format' image attribute (list value)
+ # Deprecated group/name - [DEFAULT]/disk_formats
+-#disk_formats = ami,ari,aki,vhd,vhdx,vmdk,raw,qcow2,vdi,iso
++disk_formats = ami,ari,aki,vhd,vhdx,vmdk,raw,qcow2,vdi,iso,root-tar
+ 
+ 
+ [keystone_authtoken]
+--- a/glance/common/config.py
++++ b/glance/common/config.py
+@@ -94,7 +94,7 @@ image_format_opts = [
+                                                    group='DEFAULT')]),
+     cfg.ListOpt('disk_formats',
+                 default=['ami', 'ari', 'aki', 'vhd', 'vhdx', 'vmdk', 'raw',
+-                         'qcow2', 'vdi', 'iso'],
++                         'qcow2', 'vdi', 'iso', 'root-tar'],
+                 help=_("Supported values for the 'disk_format' "
+                        "image attribute"),
+                 deprecated_opts=[cfg.DeprecatedOpt('disk_formats',
+--- a/glance/tests/unit/v2/test_images_resource.py
++++ b/glance/tests/unit/v2/test_images_resource.py
+@@ -3727,7 +3727,7 @@ class TestImageSchemaFormatConfiguration
+     def test_default_disk_formats(self):
+         schema = glance.api.v2.images.get_schema()
+         expected = [None, 'ami', 'ari', 'aki', 'vhd', 'vhdx', 'vmdk',
+-                    'raw', 'qcow2', 'vdi', 'iso']
++                    'raw', 'qcow2', 'vdi', 'iso', 'root-tar']
+         actual = schema.properties['disk_format']['enum']
+         self.assertEqual(expected, actual)
+ 
+--- a/rally-jobs/plugins/plugin_sample.py
++++ b/rally-jobs/plugins/plugin_sample.py
+@@ -42,7 +42,8 @@ class GlancePlugin(scenario.OpenStackSce
+         Acceptable formats: ami, ari, aki, bare, ovf, ova and docker.
+         :param image_location: image file location used to upload
+         :param disk_format: Disk format of image. Acceptable formats:
+-        ami, ari, aki, vhd, vhdx, vmdk, raw, qcow2, vdi, and iso.
++        ami, ari, aki, vhd, vhdx, vmdk, raw, qcow2, vdi, root-tar,
++        and iso.
+         :param **kwargs:  optional parameters to create image
+ 
+         returns: object of image
