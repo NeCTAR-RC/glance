@@ -186,7 +186,10 @@ class ImageRepo(object):
         return images
 
     def _format_image_from_db(self, db_image, db_tags):
-        visibility = 'public' if db_image['is_public'] else 'private'
+        if 'visibility' in db_image:
+            visibility = db_image['visibility']
+        else:
+            visibility = 'public' if db_image['is_public'] else 'private'
         properties = {}
         for prop in db_image.pop('properties'):
             # NOTE(markwash) db api requires us to filter deleted
