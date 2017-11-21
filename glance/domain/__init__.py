@@ -173,8 +173,7 @@ class Image(object):
     @visibility.setter
     def visibility(self, visibility):
         if visibility not in ('public', 'private'):
-            raise ValueError(_('Visibility must be either "public" '
-                               'or "private"'))
+            visibility = 'private'
         self._visibility = visibility
 
     @property

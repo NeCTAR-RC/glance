@@ -153,8 +153,7 @@ class TestImage(test_utils.BaseTestCase):
     def test_visibility_enumerated(self):
         self.image.visibility = 'public'
         self.image.visibility = 'private'
-        self.assertRaises(ValueError, setattr,
-                          self.image, 'visibility', 'ellison')
+        self.image.visibility = 'shared'
 
     def test_tags_always_a_set(self):
         self.image.tags = ['a', 'b', 'c']
