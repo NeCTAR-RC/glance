@@ -1,4 +1,3 @@
 drop-sphinxcontrib-apidoc.patch
 add-root-tar-support.patch
 handle-StopIteration.patch
-fix-py3-recursion.patch
