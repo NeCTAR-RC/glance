@@ -1,0 +1,7 @@
+Tests: glance-daemons, glance-shebangs-py3
+Depends: python3-glance, glance-api, glance-registry, curl
+Restrictions: needs-root
+
+Tests: glance-daemons, glance-shebangs-py2
+Depends: glance-api, glance-registry, curl
+Restrictions: needs-root

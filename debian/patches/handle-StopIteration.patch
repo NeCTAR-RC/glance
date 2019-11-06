@@ -1,0 +1,49 @@
+From f537389811dcc5e0ec5ee02883f75a3baa34479e Mon Sep 17 00:00:00 2001
+From: Corey Bryant <corey.bryant@canonical.com>
+Date: Fri, 13 Jul 2018 11:22:14 -0400
+Subject: [PATCH] Handle StopIteration for Py3.7 PEP 0479
+
+Replace raise of StopIteration with return.
+
+PEP 0479, https://www.python.org/dev/peps/pep-0479/, makes the
+following change: "when StopIteration is raised inside a generator,
+it is replaced it with RuntimeError".
+And states: "If raise StopIteration occurs directly in a generator,
+simply replace it with return."
+
+Change-Id: Ia7d6af7165077aa93c76185c28c355c06a202088
+Closes-Bug: #1781627
+---
+ glance/tests/unit/api/test_common.py   | 2 +-
+ glance/tests/unit/common/test_utils.py | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/glance/tests/unit/api/test_common.py b/glance/tests/unit/api/test_common.py
+index ab1ccb99..cf3c9f93 100644
+--- a/glance/tests/unit/api/test_common.py
++++ b/glance/tests/unit/api/test_common.py
+@@ -34,7 +34,7 @@ class SimpleIterator(object):
+             yield chunk
+             chunk = read_chunk()
+         else:
+-            raise StopIteration()
++            return
+ 
+ 
+ class TestSizeCheckedIter(testtools.TestCase):
+diff --git a/glance/tests/unit/common/test_utils.py b/glance/tests/unit/common/test_utils.py
+index 48911c67..98ff61c2 100644
+--- a/glance/tests/unit/common/test_utils.py
++++ b/glance/tests/unit/common/test_utils.py
+@@ -87,7 +87,7 @@ class TestUtils(test_utils.BaseTestCase):
+             yield chunk
+             iteration += 1
+             if iteration >= max_iterations:
+-                raise StopIteration()
++                return
+ 
+     def _test_reader_chunked(self, chunk_size, read_size, max_iterations=5):
+         generator = self._create_generator(chunk_size, max_iterations)
+-- 
+2.17.1
+

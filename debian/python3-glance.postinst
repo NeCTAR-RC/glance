@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ] ; then
+	update-alternatives --install /usr/bin/glance-api glance-api /usr/bin/python3-glance-api 200
+	update-alternatives --install /usr/bin/glance-cache-cleaner glance-cache-cleaner /usr/bin/python3-glance-cache-cleaner 200
+	update-alternatives --install /usr/bin/glance-cache-manage glance-cache-manage /usr/bin/python3-glance-cache-manage 200
+	update-alternatives --install /usr/bin/glance-cache-prefetcher glance-cache-prefetcher /usr/bin/python3-glance-cache-prefetcher 200
+	update-alternatives --install /usr/bin/glance-cache-pruner glance-cache-pruner /usr/bin/python3-glance-cache-pruner 200
+	update-alternatives --install /usr/bin/glance-control glance-control /usr/bin/python3-glance-control 200
+	update-alternatives --install /usr/bin/glance-manage glance-manage /usr/bin/python3-glance-manage 200
+	update-alternatives --install /usr/bin/glance-registry glance-registry /usr/bin/python3-glance-registry 200
+	update-alternatives --install /usr/bin/glance-replicator glance-replicator /usr/bin/python3-glance-replicator 200
+	update-alternatives --install /usr/bin/glance-scrubber glance-scrubber /usr/bin/python3-glance-scrubber 200
+	update-alternatives --install /usr/bin/glance-wsgi-api glance-wsgi-api /usr/bin/python3-glance-wsgi-api 200
+fi
+
+#DEBHELPER#
+
+exit 0

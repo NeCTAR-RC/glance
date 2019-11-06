@@ -1,0 +1,15 @@
+Description: Drop sphinxcontrib.apidoc extension until package is available.
+Author: Corey Bryant <corey.bryant@canonical.com>
+Forwarded: non-needed
+
+--- a/doc/source/conf.py
++++ b/doc/source/conf.py
+@@ -52,7 +52,7 @@
+               'oslo_config.sphinxext',
+               'oslo_config.sphinxconfiggen',
+               'openstackdocstheme',
+-              'sphinxcontrib.apidoc',
++              #'sphinxcontrib.apidoc',
+               ]
+ 
+ # openstackdocstheme options

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "disappear" ] ; then
+	update-alternatives --remove glance-api /usr/bin/python2-glance-api
+	update-alternatives --remove glance-cache-cleaner /usr/bin/python2-glance-cache-cleaner
+	update-alternatives --remove glance-cache-manage /usr/bin/python2-glance-cache-manage
+	update-alternatives --remove glance-cache-prefetcher /usr/bin/python2-glance-cache-prefetcher
+	update-alternatives --remove glance-cache-pruner /usr/bin/python2-glance-cache-pruner
+	update-alternatives --remove glance-control /usr/bin/python2-glance-control
+	update-alternatives --remove glance-manage /usr/bin/python2-glance-manage
+	update-alternatives --remove glance-registry /usr/bin/python2-glance-registry
+	update-alternatives --remove glance-replicator /usr/bin/python2-glance-replicator
+	update-alternatives --remove glance-scrubber /usr/bin/python2-glance-scrubber
+	update-alternatives --remove glance-wsgi-api /usr/bin/python2-glance-wsgi-api
+fi
+
+#DEBHELPER#
+
+exit 0

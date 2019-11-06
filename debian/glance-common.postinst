@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+GLANCE_UID=64062
+GLANCE_GID=64062
+
+if [ "$1" = "configure" ]
+then
+	if ! getent group glance > /dev/null 2>&1
+	then
+		addgroup --quiet --system \
+            --gid $GLANCE_GID glance 2>/dev/null
+	fi
+	if ! getent passwd glance > /dev/null 2>&1
+	then
+        adduser --quiet --system \
+            --home /var/lib/glance \
+            --no-create-home \
+            --uid $GLANCE_UID \
+            --gid $GLANCE_GID \
+            --shell /bin/false glance 2>/dev/null
+	fi
+	chown -R glance:adm /var/log/glance
+	chmod 0750 /var/log/glance
+	chown root:glance -R /etc/glance
+	chmod 0750 /etc/glance
+	find /var/lib/glance -xdev -type d -exec chown glance:glance {} \;
+fi
+
+#DEBHELPER#
