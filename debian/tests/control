@@ -1,0 +1,3 @@
+Tests: glance-daemons
+Depends: glance-api, curl
+Restrictions: needs-root

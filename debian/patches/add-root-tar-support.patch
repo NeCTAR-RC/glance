@@ -1,0 +1,57 @@
+--- a/doc/source/user/formats.rst
++++ b/doc/source/user/formats.rst
+@@ -82,6 +82,10 @@ You can set your image's disk format to
+ 
+   This indicates what is stored in Glance is an Amazon machine image
+ 
++* **root**
++
++  This indicates what is store in Glance is an LXD image
++
+ Container Format
+ ----------------
+ 
+--- a/doc/source/user/glanceapi.rst
++++ b/doc/source/user/glanceapi.rst
+@@ -516,7 +516,7 @@ The list of metadata headers that Glance
+ 
+   This header is required, unless reserving an image. Valid values are one of
+   ``aki``, ``ari``, ``ami``, ``raw``, ``iso``, ``vhd``, ``vhdx``, ``vdi``,
+-  ``qcow2``, ``vmdk`` or ``ploop``.
++  ``qcow2``, ``vmdk`` ``ploop`` or ``root-tar``.
+ 
+   For more information, see :ref:`formats`.
+ 
+--- a/etc/glance-api.conf
++++ b/etc/glance-api.conf
+@@ -3465,7 +3465,7 @@
+ 
+ # Supported values for the 'disk_format' image attribute (list value)
+ # Deprecated group/name - [DEFAULT]/disk_formats
+-#disk_formats = ami,ari,aki,vhd,vhdx,vmdk,raw,qcow2,vdi,iso,ploop
++disk_formats = ami,ari,aki,vhd,vhdx,vmdk,raw,qcow2,vdi,iso,ploop.root-tar
+ 
+ 
+ [keystone_authtoken]
+--- a/glance/common/config.py
++++ b/glance/common/config.py
+@@ -92,7 +92,7 @@ image_format_opts = [
+                                                    group='DEFAULT')]),
+     cfg.ListOpt('disk_formats',
+                 default=['ami', 'ari', 'aki', 'vhd', 'vhdx', 'vmdk', 'raw',
+-                         'qcow2', 'vdi', 'iso', 'ploop'],
++                         'qcow2', 'vdi', 'iso', 'ploop', 'root-tar'],
+                 help=_("Supported values for the 'disk_format' "
+                        "image attribute"),
+                 deprecated_opts=[cfg.DeprecatedOpt('disk_formats',
+--- a/glance/tests/unit/v2/test_images_resource.py
++++ b/glance/tests/unit/v2/test_images_resource.py
+@@ -4583,7 +4583,7 @@ class TestImageSchemaFormatConfiguration
+     def test_default_disk_formats(self):
+         schema = glance.api.v2.images.get_schema()
+         expected = [None, 'ami', 'ari', 'aki', 'vhd', 'vhdx', 'vmdk',
+-                    'raw', 'qcow2', 'vdi', 'iso', 'ploop']
++                    'raw', 'qcow2', 'vdi', 'iso', 'ploop', 'root-tar']
+         actual = schema.properties['disk_format']['enum']
+         self.assertEqual(expected, actual)
+ 
